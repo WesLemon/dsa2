@@ -120,11 +120,19 @@ class SortComparison {
      * @return after the method returns, the array must be in ascending sorted order.
      */
     static double[] mergeSortRecursive (double[] a) {
-
+        double[] aux = new double[a.length];
+        mergeSortRecursive(a, aux, 0, a.length-1);
         return a;
-        //todo: implement the sort
-
     }//end mergeSortRecursive
+
+    private static void mergeSortRecursive (double[] a, double [] aux, int lo, int hi)
+    {
+        if(hi <= lo) return;
+        int mid = lo + (hi - lo) / 2;
+        mergeSortRecursive(aux, a, lo, mid);
+        mergeSortRecursive(aux, a, mid+1, hi);
+        merge(a, aux, lo, mid, hi);
+    }
 
     public static void main(String[] args) {
 
