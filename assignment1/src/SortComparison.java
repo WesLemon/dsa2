@@ -135,7 +135,41 @@ class SortComparison {
     }
 
     public static void main(String[] args) {
+        double[] a1 = new double[] {
+                3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
+        SortComparison.insertionSort(a1);
 
-        //todo: do experiments as per assignment instructions
+        double[] a2 = new double[] {
+                3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
+        SortComparison.selectionSort(a2);
+
+        double[] a3 = new double[] {
+                3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
+        SortComparison.mergeSortIterative(a3);
+
+        double[] a4 = new double[] {
+                3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
+        SortComparison.mergeSortRecursive(a4);
+
+        for (double v : a1) {
+            System.out.print(v + " ");
+        }
+        System.out.println(" InsertionSort");
+
+        for (double v : a2) {
+            System.out.print(v + " ");
+        }
+        System.out.println(" SelectionSort");
+
+        for (double v : a3) {
+            System.out.print(v + " ");
+        }
+        System.out.println(" MergeSortIterative");
+
+
+        for (double v : a4) {
+            System.out.print(v + " ");
+        }
+        System.out.println(" MergeSortRecursive");
     }//end main
 }//end class
