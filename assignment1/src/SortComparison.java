@@ -7,7 +7,6 @@
  */
 
 class SortComparison {
-
     /**
      * Sorts an array of doubles using InsertionSort.
      * This method is static, thus it can be called as SortComparison.sort(a)
@@ -16,7 +15,6 @@ class SortComparison {
      *
      */
     static double [] insertionSort (double[] a){
-
         double temp;
         for(int i = 1; i < a.length; i++)
         {
@@ -41,9 +39,22 @@ class SortComparison {
      *
      */
     static double [] selectionSort (double[] a){
+        int n = a.length;
+        for(int i = 0; i < n-1; i++)
+        {
+            int min = i;
+            for(int j = i+1; j < n; j++)
+            {
+                if(a[j] < a[min])
+                {
+                    min = j;
+                }
+            }
+            double temp = a[min];
+            a[min] = a[i];
+            a[i] = temp;
+        }
         return a;
-        //todo: implement the sort
-
     }//end selectionsort
 
     /**
