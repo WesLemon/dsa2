@@ -65,10 +65,32 @@ class SortComparison {
      *
      */
     static double [] quickSort (double[] a){
-        return a;
-        //todo: implement the sort
 
+        return a;
     }//end quicksort
+
+    /**
+     * Merges an array of doubles with an auxiliary array to allow the implementation of Merge Sort.
+     * This method is private and can only be called by mergeSortIterative and mergeSortRecursive.
+     *
+     * @param a: the initial unsorted array of doubles to be merged
+     * @param aux: the auxiliary array of doubles where the sorted array will be stored
+     * @param lo: the index in the full sorted array where the first element of aux will be stored
+     * @param mid: the index in the full sorted array where the middle element of aux will be stored
+     * @param hi: the index in the fully sorted array where the last element of aux will be stored
+     */
+
+    private static void merge(double[] a, double[] aux, int lo, int mid, int hi)
+    {
+        int i = lo, j = mid+1;
+        for(int k = lo; k <= hi; k++)
+        {
+            if      (i > mid)       {aux[k] = a[j++];}
+            else if (j > hi)        {aux[k] = a[i++];}
+            else if (a[j] < a[i])   {aux[k] = a[j++];}
+            else                    {aux[k] = a[i++];}
+        }
+    }
 
     /**
      * Sorts an array of doubles using iterative implementation of Merge Sort.
@@ -78,9 +100,16 @@ class SortComparison {
      * @return after the method returns, the array must be in ascending sorted order.
      */
     static double[] mergeSortIterative (double[] a) {
+        int N = a.length;
+        double[] aux = new double[N];
+        for(int sz = 1; sz < N; sz = sz+sz)
+        {
+            for(int lo = 0; lo < N-sz; lo += sz+sz)
+            {
+                merge(a, aux, lo, lo+sz-1, Math.min(lo+sz+sz-1, N-1));
+            }
+        }
         return a;
-        //todo: implement the sort
-
     }//end mergesortIterative
 
     /**
