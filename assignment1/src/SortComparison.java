@@ -79,7 +79,6 @@ class SortComparison {
      * @param mid: the index in the full sorted array where the middle element of aux will be stored
      * @param hi: the index in the fully sorted array where the last element of aux will be stored
      */
-
     private static void merge(double[] a, double[] aux, int lo, int mid, int hi)
     {
         int i = lo, j = mid+1;
