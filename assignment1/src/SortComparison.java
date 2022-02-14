@@ -211,9 +211,9 @@ class SortComparison {
         merge(a, aux, lo, mid, hi);
     }
 
-    /**
-     * Main method used for quickly testing whether the sorting algorithms worked.
-     */
+    /*
+    Main method used for quickly testing whether the sorting algorithms worked.
+
     public static void main(String[] args) {
         double[] a1 = new double[] {
                 3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
@@ -260,4 +260,5 @@ class SortComparison {
         }
         System.out.println(" Quicksort");
     }//end main
+    */
 }//end class
