@@ -7,12 +7,12 @@
  */
 
 class SortComparison {
+
     /**
      * Sorts an array of doubles using InsertionSort.
      * This method is static, thus it can be called as SortComparison.sort(a)
      * @param a: An unsorted array of doubles.
      * @return array sorted in ascending order.
-     *
      */
     static double [] insertionSort (double[] a){
         double temp;
@@ -36,7 +36,6 @@ class SortComparison {
      * This method is static, thus it can be called as SortComparison.sort(a)
      * @param a: An unsorted array of doubles.
      * @return array sorted in ascending order
-     *
      */
     static double [] selectionSort (double[] a){
         int n = a.length;
@@ -62,13 +61,18 @@ class SortComparison {
      * This method is static, thus it can be called as SortComparison.sort(a)
      * @param a: An unsorted array of doubles.
      * @return array sorted in ascending order
-     *
      */
     static double [] quickSort (double[] a){
         recursiveQuicksort(a, 0, a.length-1);
         return a;
     }//end quicksort
 
+    /**
+     * Recursive method for Quick Sort to be called by quicksort().
+     * @param a: An unsorted array of doubles.
+     * @param lo: The lowest index of the array to be sorted.
+     * @param hi: The highest index of the array to be sorted
+     */
     private static void recursiveQuicksort (double[] a, int lo, int hi)
     {
         if(hi <= lo)
@@ -80,6 +84,14 @@ class SortComparison {
         recursiveQuicksort(a, pivotPos+1, hi);
     }
 
+    /**
+     * Method used to partition an array by finding a pivot value with all elements
+     * on its left being smaller than it, and all elements on its right being greater.
+     * @param a: an unsorted array of doubles
+     * @param lo: the lowest index of the array to be partitioned
+     * @param hi: the highest index of the array to be partitioned
+     * @return an index in the array to be used as a pivot value
+     */
     private static int partition(double[] a, int lo, int hi)
     {
         int i = lo;
@@ -114,11 +126,9 @@ class SortComparison {
         return j;
     }
 
-
     /**
      * Merges an array of doubles with an auxiliary array to allow the implementation of Merge Sort.
      * This method is private and can only be called by mergeSortIterative and mergeSortRecursive.
-     *
      * @param a: the initial unsorted array of doubles to be merged
      * @param aux: the auxiliary array of doubles where the sorted array will be stored
      * @param lo: the index in the full sorted array where the first element of aux will be stored
@@ -154,7 +164,6 @@ class SortComparison {
     /**
      * Sorts an array of doubles using iterative implementation of Merge Sort.
      * This method is static, thus it can be called as SortComparison.sort(a)
-     *
      * @param a: An unsorted array of doubles.
      * @return after the method returns, the array must be in ascending sorted order.
      */
@@ -174,7 +183,6 @@ class SortComparison {
     /**
      * Sorts an array of doubles using recursive implementation of Merge Sort.
      * This method is static, thus it can be called as SortComparison.sort(a)
-     *
      * @param a: An unsorted array of doubles.
      * @return after the method returns, the array must be in ascending sorted order.
      */
@@ -184,6 +192,13 @@ class SortComparison {
         return a;
     }//end mergeSortRecursive
 
+    /**
+     * The recursive method for Merge Sort to be called by mergeSortRecursive().
+     * @param a: an unsorted array of doubles
+     * @param aux: an auxiliary array for copying the original array before sorting
+     * @param lo: the lowest index in the array to be sorted
+     * @param hi: the highest index in the array to be sorted
+     */
     private static void mergeSortRecursive (double[] a, double [] aux, int lo, int hi)
     {
         if(hi <= lo)
@@ -196,6 +211,9 @@ class SortComparison {
         merge(a, aux, lo, mid, hi);
     }
 
+    /**
+     * Main method used for quickly testing whether the sorting algorithms worked.
+     */
     public static void main(String[] args) {
         double[] a1 = new double[] {
                 3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
