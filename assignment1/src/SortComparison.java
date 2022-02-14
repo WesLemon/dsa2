@@ -65,9 +65,55 @@ class SortComparison {
      *
      */
     static double [] quickSort (double[] a){
-
+        recursiveQuicksort(a, 0, a.length-1);
         return a;
     }//end quicksort
+
+    private static void recursiveQuicksort (double[] a, int lo, int hi)
+    {
+        if(hi <= lo)
+        {
+            return;
+        }
+        int pivotPos = partition(a, lo, hi);
+        recursiveQuicksort(a, lo, pivotPos-1);
+        recursiveQuicksort(a, pivotPos+1, hi);
+    }
+
+    private static int partition(double[] a, int lo, int hi)
+    {
+        int i = lo;
+        int j = hi+1;
+        double pivot = a[lo];
+        while(true)
+        {
+            while(a[++i] < pivot)
+            {
+                if(i == hi)
+                {
+                    break;
+                }
+            }
+            while(pivot < a[--j])
+            {
+                if(j == lo)
+                {
+                    break;
+                }
+            }
+            if(i >= j)
+            {
+                break;
+            }
+            double temp = a[i];
+            a[i] = a[j];
+            a[j] = temp;
+        }
+        a[lo] = a[j];
+        a[j] = pivot;
+        return j;
+    }
+
 
     /**
      * Merges an array of doubles with an auxiliary array to allow the implementation of Merge Sort.
@@ -82,13 +128,27 @@ class SortComparison {
 
     private static void merge(double[] a, double[] aux, int lo, int mid, int hi)
     {
+        if (hi + 1 - lo >= 0) System.arraycopy(a, lo, aux, lo, hi + 1 - lo);
+
         int i = lo, j = mid+1;
         for(int k = lo; k <= hi; k++)
         {
-            if      (i > mid)       {aux[k] = a[j++];}
-            else if (j > hi)        {aux[k] = a[i++];}
-            else if (a[j] < a[i])   {aux[k] = a[j++];}
-            else                    {aux[k] = a[i++];}
+            if(i > mid)
+            {
+                a[k] = aux[j++];
+            }
+            else if(j > hi)
+            {
+                a[k] = aux[i++];
+            }
+            else if(aux[j] < aux[i])
+            {
+                a[k] = aux[j++];
+            }
+            else
+            {
+                a[k] = aux[i++];
+            }
         }
     }
 
@@ -127,49 +187,60 @@ class SortComparison {
 
     private static void mergeSortRecursive (double[] a, double [] aux, int lo, int hi)
     {
-        if(hi <= lo) return;
+        if(hi <= lo)
+        {
+            return;
+        }
         int mid = lo + (hi - lo) / 2;
-        mergeSortRecursive(aux, a, lo, mid);
-        mergeSortRecursive(aux, a, mid+1, hi);
+        mergeSortRecursive(a, aux, lo, mid);
+        mergeSortRecursive(a, aux, mid+1, hi);
         merge(a, aux, lo, mid, hi);
     }
 
     public static void main(String[] args) {
         double[] a1 = new double[] {
                 3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
-        SortComparison.insertionSort(a1);
+        double[] b1 = SortComparison.insertionSort(a1);
 
         double[] a2 = new double[] {
                 3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
-        SortComparison.selectionSort(a2);
+        double[] b2 = SortComparison.selectionSort(a2);
 
         double[] a3 = new double[] {
                 3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
-        SortComparison.mergeSortIterative(a3);
+        double[] b3 = SortComparison.mergeSortIterative(a3);
 
         double[] a4 = new double[] {
                 3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
-        SortComparison.mergeSortRecursive(a4);
+        double[] b4 = SortComparison.mergeSortRecursive(a4);
 
-        for (double v : a1) {
+        double[] a5 = new double[] {
+                3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
+        double[] b5 = SortComparison.quickSort(a5);
+
+        for (double v : b1) {
             System.out.print(v + " ");
         }
         System.out.println(" InsertionSort");
 
-        for (double v : a2) {
+        for (double v : b2) {
             System.out.print(v + " ");
         }
         System.out.println(" SelectionSort");
 
-        for (double v : a3) {
+        for (double v : b3) {
             System.out.print(v + " ");
         }
         System.out.println(" MergeSortIterative");
 
-
-        for (double v : a4) {
+        for (double v : b4) {
             System.out.print(v + " ");
         }
         System.out.println(" MergeSortRecursive");
+
+        for (double v : b5) {
+            System.out.print(v + " ");
+        }
+        System.out.println(" Quicksort");
     }//end main
 }//end class
