@@ -99,14 +99,14 @@ class SortComparison {
         double pivot = a[lo];
         while(true)
         {
-            while(a[++i] < pivot)
+            while(a[++i] <= pivot)
             {
                 if(i == hi)
                 {
                     break;
                 }
             }
-            while(pivot < a[--j])
+            while(pivot <= a[--j])
             {
                 if(j == lo)
                 {
