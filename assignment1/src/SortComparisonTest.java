@@ -45,39 +45,18 @@ public class SortComparisonTest
             0.2, 1.2, 1.2, 2.3, 2.4, 3.1, 3.2, 4.5, 4.5, 5.0, 5.3, 6.5, 6.7, 9.7, 9.8, 9.8, 10.3
     };
 
-    @org.junit.Test
-    public void testInsertionSort()
-    {
-        double[] array = {3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
-        assertArrayEquals(SortComparison.insertionSort(array), SORTED_RESULT, 0.0);
-    }
+    private  static final double[] ARRAY_TO_SORT = {
+            3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0
+    };
 
     @org.junit.Test
-    public void testSelectionSort()
+    public void testSortingAlgorithms()
     {
-        double[] array = {3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
-        assertArrayEquals(SortComparison.selectionSort(array), SORTED_RESULT, 0.0);
-    }
-
-    @org.junit.Test
-    public void testMergeSortIterative()
-    {
-        double[] array = {3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
-        assertArrayEquals(SortComparison.mergeSortIterative(array), SORTED_RESULT, 0.0);
-    }
-
-    @org.junit.Test
-    public void testMergeSortRecursive()
-    {
-        double[] array = {3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
-        assertArrayEquals(SortComparison.mergeSortRecursive(array), SORTED_RESULT, 0.0);
-    }
-
-    @org.junit.Test
-    public void testQuickSort()
-    {
-        double[] array = {3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
-        assertArrayEquals(SortComparison.quickSort(array), SORTED_RESULT, 0.0);
+        assertArrayEquals(SortComparison.insertionSort(ARRAY_TO_SORT), SORTED_RESULT, 0.0);
+        assertArrayEquals(SortComparison.selectionSort(ARRAY_TO_SORT), SORTED_RESULT, 0.0);
+        assertArrayEquals(SortComparison.mergeSortIterative(ARRAY_TO_SORT), SORTED_RESULT, 0.0);
+        assertArrayEquals(SortComparison.mergeSortRecursive(ARRAY_TO_SORT), SORTED_RESULT, 0.0);
+        assertArrayEquals(SortComparison.quickSort(ARRAY_TO_SORT), SORTED_RESULT, 0.0);
     }
 
     @org.junit.Test
