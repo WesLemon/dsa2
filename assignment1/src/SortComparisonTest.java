@@ -15,6 +15,17 @@ import java.util.Scanner;
    1000 reverse order      665100      418100      1910033     66533       123333
    1000 sorted             619100      324300      1771600     48866       91666
    10000 random            42356433    23854333    1256000     937900      1477966
+
+   a)   The order of input has an effect on all of these algorithms. As you can see all of them are at least twice
+        as fast when the input is nearly ordered. This is because
+
+   b)
+
+   c)
+
+   d)
+
+   e)
  */
 
 //-------------------------------------------------------------------------
