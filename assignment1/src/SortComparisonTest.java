@@ -1,10 +1,21 @@
 import static org.junit.Assert.*;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+/*
+                           Insert      Selection   Quick       Merge Rec   Merge It
+   1000 random             4009333     3040833     1080000     227600      616900
+   1000 few unique         987533      1544466     113833      164733      208500
+   1000 nearly ordered     1765200     832800      129533      116133      294733
+   1000 reverse order      665100      418100      1910033     66533       123333
+   1000 sorted             619100      324300      1771600     48866       91666
+   10000 random            42356433    23854333    1256000     937900      1477966
+ */
 
 //-------------------------------------------------------------------------
 /**
@@ -73,26 +84,87 @@ public class SortComparisonTest
      *
      */
     public static void main(String[] args) {
-        Scanner inFile1 = null;
+        double[] random1000 = getArrayFromFile("numbers1000.txt", 1000);
+        double[] fewUnique  = getArrayFromFile("numbers1000Duplicates.txt", 1000);
+        double[] nearlyOrdered = getArrayFromFile("numbersNearlyOrdered1000.txt", 1000);
+        double[] reverse = getArrayFromFile("numbersReverse1000.txt", 1000);
+        double[] sorted = getArrayFromFile("numbersSorted1000.txt", 1000);
+        double[] random10000 = getArrayFromFile("numbers10000.txt", 10000);
+
+        System.out.println("1000 Random Doubles: ");
+        sortArray(random1000);
+        System.out.println();
+
+        System.out.println("1000 Doubles - Few Unique: ");
+        sortArray(fewUnique);
+        System.out.println();
+
+        System.out.println("1000 Doubles - Nearly Ordered: ");
+        sortArray(nearlyOrdered);
+        System.out.println();
+
+        System.out.println("1000 Doubles - Reverse Order: ");
+        sortArray(reverse);
+        System.out.println();
+
+        System.out.println("1000 Sorted Doubles: ");
+        sortArray(sorted);
+        System.out.println();
+
+        System.out.println("10000 Random Doubles: ");
+        sortArray(random10000);
+    }
+
+    private static void sortArray(double[] a)
+    {
+        double[] temp = a.clone();
+
+        long start = System.nanoTime();
+        SortComparison.quickSort(temp);
+        long end = System.nanoTime();
+        System.out.println("Quick Sort - " + (end-start) + " nanoseconds");
+
+        start = System.nanoTime();
+        SortComparison.insertionSort(temp);
+        end = System.nanoTime();
+        System.out.println("Insertion Sort - " + (end-start) + " nanoseconds");
+
+        start = System.nanoTime();
+        SortComparison.mergeSortIterative(temp);
+        end = System.nanoTime();
+        System.out.println("Merge Sort Iterative - " + (end-start) + " nanoseconds");
+
+        start = System.nanoTime();
+        SortComparison.mergeSortRecursive(temp);
+        end = System.nanoTime();
+        System.out.println("Merge Sort Recursive - " + (end-start) + " nanoseconds");
+
+        start = System.nanoTime();
+        SortComparison.selectionSort(temp);
+        end = System.nanoTime();
+        System.out.println("Selection Sort - " + (end-start) + " nanoseconds");
+    }
+
+    private static double[] getArrayFromFile(String filename, int size)
+    {
+        Scanner inFile = null;
 
         try {
-            inFile1 = new Scanner(new File("numbers1000.txt"));
+            inFile = new Scanner(new File(filename));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        double[] random = new double[1000];
+        double[] array = new double[size];
 
-        if (inFile1 != null) {
-            for(int i = 0; inFile1.hasNextDouble(); i++)
+        if (inFile != null)
+        {
+            for(int i = 0; inFile.hasNextDouble(); i++)
             {
-                random[i] = inFile1.nextDouble();
+                array[i] = inFile.nextDouble();
             }
         }
 
-        double[] randomQuick = SortComparison.quickSort(random);
-        double[] randomInsertion = SortComparison.insertionSort(random);
-        double[] randomMerge1 = SortComparison.mergeSortIterative(random);
-        double[] randomMerge2 = SortComparison.mergeSortRecursive(random);
+        return array;
     }
 }
