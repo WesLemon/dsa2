@@ -43,13 +43,38 @@ public class SortComparisonTest
     };
 
     @Test
-    public void testSortingAlgorithms()
+    public void testInsertionSort()
     {
-        assertArrayEquals(SortComparison.insertionSort(ARRAY_TO_BE_SORTED), SORTED_RESULT);
-        assertArrayEquals(SortComparison.selectionSort(ARRAY_TO_BE_SORTED), SORTED_RESULT);
-        assertArrayEquals(SortComparison.mergeSortIterative(ARRAY_TO_BE_SORTED), SORTED_RESULT);
-        assertArrayEquals(SortComparison.mergeSortRecursive(ARRAY_TO_BE_SORTED), SORTED_RESULT);
-        assertArrayEquals(SortComparison.quickSort(ARRAY_TO_BE_SORTED), SORTED_RESULT);
+        double[] array = {3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
+        assertArrayEquals(SortComparison.insertionSort(array), SORTED_RESULT);
+    }
+
+    @Test
+    public void testSelectionSort()
+    {
+        double[] array = {3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
+        assertArrayEquals(SortComparison.selectionSort(array), SORTED_RESULT);
+    }
+
+    @Test
+    public void testMergeSortIterative()
+    {
+        double[] array = {3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
+        assertArrayEquals(SortComparison.mergeSortIterative(array), SORTED_RESULT);
+    }
+
+    @Test
+    public void testMergeSortRecursive()
+    {
+        double[] array = {3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
+        assertArrayEquals(SortComparison.mergeSortRecursive(array), SORTED_RESULT);
+    }
+
+    @Test
+    public void testQuickSort()
+    {
+        double[] array = {3.2, 1.2, 9.8, 5.3, 0.2, 10.3, 2.4, 4.5, 6.7, 2.3, 1.2, 9.8, 9.7, 3.1, 4.5, 6.5, 5.0};
+        assertArrayEquals(SortComparison.quickSort(array), SORTED_RESULT);
     }
 
     // ----------------------------------------------------------
