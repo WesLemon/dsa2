@@ -1,10 +1,10 @@
 import static org.junit.Assert.*;
-
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 //-------------------------------------------------------------------------
 /**
@@ -93,9 +93,27 @@ public class SortComparisonTest
      *  Use this main method to create the experiments needed to answer the experimental performance questions of this assignment.
      *
      */
-    public static void main(String[] args)
-    {
-        //TODO: implement this method
-    }
+    public static void main(String[] args) {
+        Scanner inFile1 = null;
 
+        try {
+            inFile1 = new Scanner(new File("numbers1000.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        double[] random = new double[1000];
+
+        if (inFile1 != null) {
+            for(int i = 0; inFile1.hasNextDouble(); i++)
+            {
+                random[i] = inFile1.nextDouble();
+            }
+        }
+
+        double[] randomQuick = SortComparison.quickSort(random);
+        double[] randomInsertion = SortComparison.insertionSort(random);
+        double[] randomMerge1 = SortComparison.mergeSortIterative(random);
+        double[] randomMerge2 = SortComparison.mergeSortRecursive(random);
+    }
 }
