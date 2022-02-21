@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /*
+   All measurements are in nanoseconds
+
                            Insert      Selection   Quick       Merge Rec   Merge It
    1000 random             4009333     3040833     1080000     227600      616900
    1000 few unique         987533      1544466     113833      164733      208500
@@ -16,16 +18,35 @@ import java.util.Scanner;
    1000 sorted             619100      324300      1771600     48866       91666
    10000 random            42356433    23854333    1256000     937900      1477966
 
+   biggest difference 1000 3390233     2716533     1796200     178734      525234
+   scalability input size  38347100    20813500    176000      710300      861066
+
    a)   The order of input has an effect on all of these algorithms. As you can see all of them are at least twice
-        as fast when the input is nearly ordered. This is because
+        as fast when the input is nearly ordered. Even Selection Sort, which is theoretically meant to be unaffected
+        by the order, is nearly 10 times faster when the array is sorted. I believe that this is due to the system
+        that I am running my algorithms on. Similarly, reverse order is meant to be the worst case for Insertion Sort,
+        but the average running time on my system is much faster than 1000 random numbers.
 
-   b)
+   b)   Insertion Sort has the biggest difference between the best and worse performance for 1000 numbers. This is
+        because it is heavily dependent on the order of the numbers. The more sorted the array, the faster the algorithm
+        should work, which is apparent from the table above. When the array is sorted, Insertion Sort should actually
+        theoretically be one of the fastest algorithm, and when it is not sorted it should be among the slowest. This
+        is not what my results showed, as I actually found it to be the second-slowest algorithm for the sorted array
+        when I ran them on my system.
 
-   c)
+   c)   Insertion Sort has the worst scalability according to my results, while Quick Sort has the best. This is
+        because Insertion Sort is quite inefficient at sorting random numbers, and the more random numbers it has to
+        sort, the worse the performance will be. On the other hand, Quick Sort is one of the most efficient sorting
+        algorithms along with Merge Sort, and according to my results it is able to scale very well showing only a
+        difference of 0.176 milliseconds despite 10 times increase in input size.
 
-   d)
+   d)   My recursive Merge Sort results were consistently faster than my iterative Merge Sort results. This is
+        probably due to the way the system I ran the experiments on handles memory.
 
-   e)
+   e)   Recursive Merge Sort is fastest for all the input files except for 1000 few unique numbers. Quick Sort is
+        slightly faster for that one input file. On my system, Merge Sort seems to be the best all-round sorting
+        algorithm, but that may be system-dependent and three experiments too small a sample size to draw any real
+        conclusions.
  */
 
 //-------------------------------------------------------------------------
