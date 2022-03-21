@@ -34,16 +34,22 @@ public class CompetitionDijkstra {
      * @param filename: A filename containing the details of the city road network
      * @param sA,       sB, sC: speeds for 3 contestants
      */
-    CompetitionDijkstra(String filename, int sA, int sB, int sC) throws FileNotFoundException {
+    CompetitionDijkstra(String filename, int sA, int sB, int sC) {
 
         this.sA = sA;
         this.sB = sB;
         this.sC = sC;
 
-        Scanner inFile = new Scanner(new File(filename));
+        Scanner inFile = null;
+        try {
+            inFile = new Scanner(new File(filename));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         intersections = -1;
         int streets = -1;
+        assert inFile != null;
         if (inFile.hasNextInt()) {
             intersections = inFile.nextInt();
         }
