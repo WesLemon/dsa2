@@ -19,7 +19,6 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class CompetitionFloydWarshall {
@@ -42,8 +41,9 @@ public class CompetitionFloydWarshall {
         this.sC = sC;
 
         Scanner inFile = null;
+        File file = new File(filename);
         try {
-            inFile = new Scanner(new File(filename));
+            inFile = new Scanner(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -58,6 +58,12 @@ public class CompetitionFloydWarshall {
         }
 
         graph = new double[intersections][intersections];
+        for (int i = 0; i < intersections; i++) {
+            for (int j = 0; j < intersections; j++) {
+                graph[i][j] = Integer.MAX_VALUE;
+            }
+        }
+
         int vertex1 = -1;
         int vertex2 = -1;
 
@@ -75,8 +81,8 @@ public class CompetitionFloydWarshall {
 
         for (int i = 0; i < intersections; i++) {
             for (int j = 0; j < intersections; j++) {
-                if (graph[i][j] == 0 && i != j) {
-                    graph[i][j] = Integer.MAX_VALUE;
+                if (i == j) {
+                    graph[i][j] = 0;
                 }
             }
         }
@@ -88,6 +94,9 @@ public class CompetitionFloydWarshall {
      */
     public int timeRequiredforCompetition() {
 
+        if (intersections == 0 || intersections == 1) {
+            return -1;
+        }
         int worstSpeed = sA;
         if (worstSpeed > sB) {
             worstSpeed = sB;
@@ -96,25 +105,20 @@ public class CompetitionFloydWarshall {
             worstSpeed = sC;
         }
 
-        if(sA < 50 || sA > 100 || sB < 50 || sB > 100 || sC < 50 || sC > 100)
-        {
+        if (sA < 50 || sA > 100 || sB < 50 || sB > 100 || sC < 50 || sC > 100) {
             return -1;
         }
 
-        // Finds the worst-case source and destination vertices.
-        double worstDist = -1;
-        for (int i = 0; i < intersections; i++) {
-            double worstFromI = worstCaseFloydWarshall(i);
-            if (worstFromI > worstDist) {
-                worstDist = worstFromI;
-            }
+        double worstDist = worstCaseFloydWarshall();
+        if(worstDist == Integer.MAX_VALUE)
+        {
+            return -1;
         }
         double result = (worstDist * 1000) / worstSpeed;
-
         return (int) Math.ceil(result);
     }
 
-    private double worstCaseFloydWarshall(int vertex) {
+    private double worstCaseFloydWarshall() {
 
         double[][] dist = new double[intersections][intersections];
         for (int i = 0; i < intersections; i++) {

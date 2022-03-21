@@ -1,7 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Random;
 import java.util.Scanner;
 
 /*
@@ -40,6 +38,7 @@ public class CompetitionDijkstra {
         this.sB = sB;
         this.sC = sC;
 
+
         Scanner inFile = null;
         try {
             inFile = new Scanner(new File(filename));
@@ -58,8 +57,16 @@ public class CompetitionDijkstra {
         }
 
         adjacencyMatrix = new double[intersections][intersections];
+
+        for (int i = 0; i < intersections; i++) {
+            for (int j = 0; j < intersections; j++) {
+                adjacencyMatrix[i][j] = Integer.MAX_VALUE;
+            }
+        }
+
         int vertex1 = -1;
         int vertex2 = -1;
+        double dist;
 
         for (int i = 0; i < streets; i++) {
             if (inFile.hasNextInt()) {
@@ -69,7 +76,8 @@ public class CompetitionDijkstra {
                 vertex2 = inFile.nextInt();
             }
             if (inFile.hasNextDouble()) {
-                adjacencyMatrix[vertex1][vertex2] = inFile.nextDouble();
+                dist = inFile.nextDouble();
+                adjacencyMatrix[vertex1][vertex2] = dist;
             }
         }
     }
@@ -87,10 +95,19 @@ public class CompetitionDijkstra {
             worstSpeed = sC;
         }
 
+        if(sA < 50 || sA > 100 || sB < 50 || sB > 100 || sC < 50 || sC > 100)
+        {
+            return -1;
+        }
+
         // Finds the worst-case source and destination vertices.
         double worstDist = -1;
         for (int i = 0; i < intersections; i++) {
             double worstFromI = worstCaseDijsktra(i);
+            if(worstFromI == Integer.MAX_VALUE)
+            {
+                return -1;
+            }
             if (worstFromI > worstDist) {
                 worstDist = worstFromI;
             }
@@ -116,7 +133,7 @@ public class CompetitionDijkstra {
             int vertex1 = minDistance(distTo, visited);
             visited[vertex1] = true;
             for (int vertex2 = 0; vertex2 < intersections; vertex2++) {
-                if(adjacencyMatrix[vertex1][vertex2] != 0 && !visited[vertex2] && distTo[vertex1] != Integer.MAX_VALUE
+                if(adjacencyMatrix[vertex1][vertex2] != Integer.MAX_VALUE && !visited[vertex2] && distTo[vertex1] != Integer.MAX_VALUE
                         && distTo[vertex1] + adjacencyMatrix[vertex1][vertex2] < distTo[vertex2]) {
                     distTo[vertex2] = distTo[vertex1] + adjacencyMatrix[vertex1][vertex2];
                 }
