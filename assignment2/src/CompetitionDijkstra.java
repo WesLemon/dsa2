@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 /*
@@ -22,55 +23,124 @@ import java.util.Scanner;
 
 public class CompetitionDijkstra {
 
+    private final int sA;
+    private final int sB;
+    private final int sC;
+
+    private final double[][] adjacencyMatrix;
+    private int intersections;
+
     /**
      * @param filename: A filename containing the details of the city road network
-     * @param sA, sB, sC: speeds for 3 contestants
-    */
-    CompetitionDijkstra (String filename, int sA, int sB, int sC){
+     * @param sA,       sB, sC: speeds for 3 contestants
+     */
+    CompetitionDijkstra(String filename, int sA, int sB, int sC) throws FileNotFoundException {
 
-        Scanner inFile = null;
-        try {
-            inFile = new Scanner(new File(filename));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        assert inFile != null;
+        this.sA = sA;
+        this.sB = sB;
+        this.sC = sC;
 
-        int intersections = -1;
+        Scanner inFile = new Scanner(new File(filename));
+
+        intersections = -1;
         int streets = -1;
-        if(inFile.hasNextInt()){
+        if (inFile.hasNextInt()) {
             intersections = inFile.nextInt();
         }
-        if(inFile.hasNextInt()){
+        if (inFile.hasNextInt()) {
             streets = inFile.nextInt();
         }
 
-        double[][] adjacency = new double[intersections][intersections];
+        adjacencyMatrix = new double[intersections][intersections];
         int vertex1 = -1;
         int vertex2 = -1;
 
         for (int i = 0; i < streets; i++) {
-            if(inFile.hasNextInt())
-            {
+            if (inFile.hasNextInt()) {
                 vertex1 = inFile.nextInt();
             }
-            if(inFile.hasNextInt()) {
+            if (inFile.hasNextInt()) {
                 vertex2 = inFile.nextInt();
             }
-            if(inFile.hasNextDouble()) {
-                adjacency[vertex1][vertex2] = inFile.nextDouble();
+            if (inFile.hasNextDouble()) {
+                adjacencyMatrix[vertex1][vertex2] = inFile.nextDouble();
             }
         }
-        System.out.println(Arrays.deepToString(adjacency));
     }
 
-
     /**
-    * @return int: minimum minutes that will pass before the three contestants can meet
+     * @return int: minimum minutes that will pass before the three contestants can meet
      */
-    public int timeRequiredforCompetition(){
+    public int timeRequiredforCompetition() {
 
-        //TO DO
-        return -1;
+        int worstSpeed = sA;
+        if (worstSpeed > sB) {
+            worstSpeed = sB;
+        }
+        if (worstSpeed > sC) {
+            worstSpeed = sC;
+        }
+
+        // Finds the worst-case source and destination vertices.
+        double worstDist = -1;
+        for (int i = 0; i < intersections; i++) {
+            double worstFromI = worstCaseDijsktra(i);
+            if (worstFromI > worstDist) {
+                worstDist = worstFromI;
+            }
+        }
+        double result = (worstDist*1000) / worstSpeed;
+        return (int)Math.ceil(result);
+    }
+
+    // Dijkstra algorithm that returns the worst-case destination vertex from a given source.
+    private double worstCaseDijsktra(int vertex) {
+        double[] distTo = new double[intersections];
+        boolean[] visited = new boolean[intersections];
+
+        // Initialise dist array
+        for (int i = 0; i < intersections; i++) {
+            distTo[i] = Integer.MAX_VALUE;
+            visited[i] = false;
+        }
+        distTo[vertex] = 0;
+
+        // Get the shortest paths from source to each vertex.
+        for (int i = 0; i < intersections-1; i++) {
+            int vertex1 = minDistance(distTo, visited);
+            visited[vertex1] = true;
+            for (int vertex2 = 0; vertex2 < intersections; vertex2++) {
+                if(adjacencyMatrix[vertex1][vertex2] != 0 && !visited[vertex2] && distTo[vertex1] != Integer.MAX_VALUE
+                        && distTo[vertex1] + adjacencyMatrix[vertex1][vertex2] < distTo[vertex2]) {
+                    distTo[vertex2] = distTo[vertex1] + adjacencyMatrix[vertex1][vertex2];
+                }
+            }
+        }
+
+        // Return the worst-case destination vertex from this source.
+        double worstCase = -1;
+        for (int i = 0; i < intersections; i++) {
+            if(distTo[i] > worstCase)
+            {
+                worstCase = distTo[i];
+            }
+        }
+        return worstCase;
+    }
+
+    // Helper method for Dijkstra.
+    private int minDistance(double[] dist, boolean[] visited)
+    {
+        double min = Integer.MAX_VALUE;
+        int min_index = -1;
+
+        for (int i = 0; i < intersections; i++) {
+            if(!visited[i] && dist[i] < min)
+            {
+                min = dist[i];
+                min_index = i;
+            }
+        }
+        return min_index;
     }
 }
