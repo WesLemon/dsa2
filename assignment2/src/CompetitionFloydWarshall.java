@@ -28,7 +28,7 @@ public class CompetitionFloydWarshall {
     private final int sC;
 
     private final double[][] graph;
-    private int intersections;
+    private int intersections = 0;
 
     /**
      * @param filename: A filename containing the details of the city road network
@@ -40,21 +40,19 @@ public class CompetitionFloydWarshall {
         this.sB = sB;
         this.sC = sC;
 
-        Scanner inFile = null;
-        File file = new File(filename);
-        try {
-            inFile = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
         int streets = -1;
+        Scanner inFile = null;
 
-        assert inFile != null;
-        if (inFile.hasNextInt()) {
-            intersections = inFile.nextInt();
-        }
-        if (inFile.hasNextInt()) {
-            streets = inFile.nextInt();
+        try {
+            inFile = new Scanner(new File(filename));
+            if (inFile.hasNextInt()) {
+                intersections = inFile.nextInt();
+            }
+            if (inFile.hasNextInt()) {
+                streets = inFile.nextInt();
+            }
+        } catch (NullPointerException | FileNotFoundException e) {
+            e.printStackTrace();
         }
 
         graph = new double[intersections][intersections];
@@ -64,8 +62,8 @@ public class CompetitionFloydWarshall {
             }
         }
 
-        int vertex1 = -1;
-        int vertex2 = -1;
+        int vertex1 = 0;
+        int vertex2 = 0;
 
         for (int i = 0; i < streets; i++) {
             if (inFile.hasNextInt()) {

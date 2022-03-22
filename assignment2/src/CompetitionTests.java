@@ -65,4 +65,12 @@ public class CompetitionTests {
 
     }
 
+    @org.junit.Test
+    public void additionalTestJ() {
+
+        CompetitionDijkstra test1 = new CompetitionDijkstra("input-J.txt", 60, 75, 61);
+        assertEquals(test1.timeRequiredforCompetition(), -1);
+
+    }
+
 }

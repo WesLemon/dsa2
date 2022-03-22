@@ -26,7 +26,7 @@ public class CompetitionDijkstra {
     private final int sC;
 
     private final double[][] adjacencyMatrix;
-    private int intersections;
+    private int intersections = 0;
 
     /**
      * @param filename: A filename containing the details of the city road network
@@ -38,22 +38,19 @@ public class CompetitionDijkstra {
         this.sB = sB;
         this.sC = sC;
 
-
+        int streets = -1;
         Scanner inFile = null;
+
         try {
             inFile = new Scanner(new File(filename));
-        } catch (FileNotFoundException e) {
+            if (inFile.hasNextInt()) {
+                intersections = inFile.nextInt();
+            }
+            if (inFile.hasNextInt()) {
+                streets = inFile.nextInt();
+            }
+        } catch (NullPointerException | FileNotFoundException e) {
             e.printStackTrace();
-        }
-
-        intersections = -1;
-        int streets = -1;
-        assert inFile != null;
-        if (inFile.hasNextInt()) {
-            intersections = inFile.nextInt();
-        }
-        if (inFile.hasNextInt()) {
-            streets = inFile.nextInt();
         }
 
         adjacencyMatrix = new double[intersections][intersections];
@@ -64,8 +61,8 @@ public class CompetitionDijkstra {
             }
         }
 
-        int vertex1 = -1;
-        int vertex2 = -1;
+        int vertex1 = 0;
+        int vertex2 = 0;
         double dist;
 
         for (int i = 0; i < streets; i++) {
@@ -86,6 +83,11 @@ public class CompetitionDijkstra {
      * @return int: minimum minutes that will pass before the three contestants can meet
      */
     public int timeRequiredforCompetition() {
+
+        if(intersections == 0 || intersections == 1)
+        {
+            return -1;
+        }
 
         int worstSpeed = sA;
         if (worstSpeed > sB) {
@@ -155,7 +157,7 @@ public class CompetitionDijkstra {
     private int minDistance(double[] dist, boolean[] visited)
     {
         double min = Integer.MAX_VALUE;
-        int min_index = -1;
+        int min_index = 0;
 
         for (int i = 0; i < intersections; i++) {
             if(!visited[i] && dist[i] < min)
